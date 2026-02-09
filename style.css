@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
 :root {
-    --bg-color: #0a0a0a;
+    --bg-color: #121212;
+    --box-color: rgba(28, 28, 28, 0.75);
     --text-primary: #e0e0e0;
-    --accent-purple: #667eea;
-    --accent-blue: #5865F2;
+    --text-secondary: #a0a0a0;
+    --accent-color: #ffffff;
+    --shadow-color: rgba(255, 255, 255, 0.1);
 }
 
 * {
@@ -28,7 +30,7 @@ html, body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, #0a0a0a, #1a1a2e);
+    background: linear-gradient(to bottom, #121212, #1a1a1a);
     z-index: 0;
 }
 
@@ -38,15 +40,15 @@ html, body {
     width: 100%;
     height: 100%;
     background-image: 
-        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-    background-size: 50px 50px;
-    animation: grid-move 20s linear infinite;
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: grid-move 15s linear infinite;
 }
 
 @keyframes grid-move {
     0% { transform: translate(0, 0); }
-    100% { transform: translate(50px, 50px); }
+    100% { transform: translate(40px, 40px); }
 }
 
 #mainContent {
@@ -69,23 +71,26 @@ html, body {
 }
 
 .mode-toggle {
-    background: rgba(20, 20, 20, 0.8);
+    background: var(--box-color);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 0.75rem 1.5rem;
-    border-radius: 8px;
+    border-radius: 9px;
     color: var(--text-primary);
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
     text-transform: lowercase;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
 .mode-toggle:hover {
-    background: rgba(30, 30, 30, 0.9);
+    background: rgba(38, 38, 38, 0.85);
     border-color: rgba(255, 255, 255, 0.2);
     transform: scale(1.05);
+    box-shadow: 0 0 20px var(--shadow-color);
 }
 
 .center-buttons {
@@ -96,7 +101,7 @@ html, body {
 }
 
 .main-btn {
-    background: linear-gradient(135deg, var(--accent-purple) 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border: none;
     padding: 1rem 3rem;
     border-radius: 50px;
@@ -121,7 +126,7 @@ html, body {
 }
 
 .discord-btn {
-    background: linear-gradient(135deg, var(--accent-blue) 0%, #4752C4 100%);
+    background: linear-gradient(135deg, #5865F2 0%, #4752C4 100%);
     box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
 }
 
