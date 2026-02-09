@@ -1,124 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>post counter</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-    .container {
-      text-align: center;
-      color: white;
-    }
-    .count {
-      font-size: 120px;
-      font-weight: 900;
-      text-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    }
-    .count.bump {
-      transform: scale(1.2);
-    }
-    .label {
-      font-size: 24px;
-      opacity: 0.9;
-      margin-top: 20px;
-    }
-    .status {
-      margin-top: 15px;
-      font-size: 14px;
-      opacity: 0.7;
-    }
-    .status.live {
-      color: #4ade80;
-    }
-    .dot {
-      display: inline-block;
-      width: 8px;
-      height: 8px;
-      background: #4ade80;
-      border-radius: 50%;
-      margin-right: 6px;
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
-    }
-    .endpoint {
-      margin-top: 50px;
-      padding: 20px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 15px;
-      backdrop-filter: blur(10px);
-    }
-    .endpoint-title {
-      font-size: 14px;
-      opacity: 0.7;
-      margin-bottom: 10px;
-    }
-    code {
-      display: block;
-      background: rgba(0,0,0,0.2);
-      padding: 10px 15px;
-      border-radius: 8px;
-      margin: 5px 0;
-      font-family: 'Monaco', 'Courier New', monospace;
-      font-size: 12px;
-      text-align: left;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xvchub</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <div class="count" id="count">0</div>
-    <div class="label">total requests</div>
-    <div class="status live">
-      <span class="dot"></span>
-      <span>live updates</span>
+    <video id="backgroundVideo" playsinline loop disablePictureInPicture autoplay muted preload="auto">
+        <source src="bg.mp4" type="video/mp4">
+    </video>
+    <audio id="backgroundMusic" autoplay loop preload="auto"></audio>
+
+    <div class="background-overlay"></div>
+
+    <div id="landingPage">
+        <div class="enter-prompt">
+            <span class="enter-text">click to enter</span>
+        </div>
     </div>
+
+    <main id="mainContent" class="hidden">
+        <div class="toggle-container">
+            <button id="modeToggle" class="mode-toggle">loader</button>
+        </div>
+
+        <div class="center-buttons">
+            <button id="copyScript" class="main-btn">copy script</button>
+            <a href="https://discord.gg/rTw5M8dRXN" target="_blank" class="main-btn discord-btn">join discord</a>
+        </div>
+
+        <div class="media-controls">
+            <button id="muteButton" class="control-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                </svg>
+            </button>
+            <input id="volumeSlider" type="range" min="0" max="1" step="0.01" value="0.1">
+        </div>
+    </main>
+
+    <div id="visualizer"></div>
     
-    <div class="endpoint">
-      <div class="endpoint-title">api endpoints</div>
-      <code>GET /api → get count</code>
-      <code>POST /api → increment count</code>
-    </div>
-  </div>
-  
-  <script>
-    const countEl = document.getElementById('count')
-    let lastCount = 0
-    
-    async function loadCount() {
-      try {
-        const res = await fetch('/api')
-        const data = await res.json()
-        const newCount = data.total_posts
-        
-        if (newCount !== lastCount) {
-          countEl.classList.add('bump')
-          setTimeout(() => countEl.classList.remove('bump'), 300)
-          lastCount = newCount
-        }
-        
-        countEl.textContent = newCount
-      } catch (err) {
-        console.error('failed to load count:', err)
-      }
-    }
-    
-    loadCount()
-    setInterval(loadCount, 1000)
-  </script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
