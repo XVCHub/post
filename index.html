@@ -1,59 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Script Hub</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>xvchub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            background: linear-gradient(to bottom, #0a0a0a 0%, #1a1a1a 100%);
+            min-height: 100vh;
+        }
+        
+        .btn {
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+        }
+        
+        .btn:active {
+            transform: scale(0.98);
+        }
+        
+        .btn.copied {
+            background: #10b981;
+            color: #fff;
+        }
+    </style>
 </head>
-<body style="margin:0;padding:0;background:#000;font-family:system-ui,-apple-system,sans-serif;overflow:hidden">
+<body class="antialiased">
     <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;height:100vh">
         <div style="display:flex;flex-direction:column;justify-items:center;align-items:center;margin-left:auto;margin-right:auto;padding-left:0.5rem;padding-right:0.5rem;gap:10px">
-            
-            <!-- Copy Script Button (Seliware style - dark) -->
-            <button id="copyBtn" style="padding:10px 20px;background:#1a1a1a;color:#fff;border:1px solid #333;border-radius:4px;cursor:pointer;font-size:14px;font-weight:500;transition:all 0.2s" onmouseover="this.style.background='#2a2a2a';this.style.borderColor='#444'" onmouseout="this.style.background='#1a1a1a';this.style.borderColor='#333'" onmousedown="this.style.transform='scale(0.95)'" onmouseup="this.style.transform='scale(1)'">
-                Copy Script
-            </button>
-            
+            <button class="btn" id="copyBtn">Copy Script</button>
         </div>
     </div>
     
-    <!-- Discord Link Bottom Left -->
-    <a style="position:fixed;bottom:20px;left:20px;color:gray;display:flex;align-items:center;gap:4px;text-decoration:none;font-size:14px;transition:color 0.2s" href="https://discord.gg/rTw5M8dRXN" target="_blank" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='gray'">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+    <a style="position:fixed;bottom:20px;left:20px;color:gray;display:flex;align-items:center;gap:2px;text-decoration:none;font-size:14px;transition:color 0.2s" href="https://discord.gg/rTw5M8dRXN" target="_blank" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='gray'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
             <path d="M224,128A96,96,0,0,1,79.93,211.11h0L42.54,223.58a8,8,0,0,1-10.12-10.12l12.47-37.39h0A96,96,0,1,1,224,128Z" opacity="0.2"></path>
             <path d="M128,24A104,104,0,0,0,36.18,176.88L24.83,210.93a16,16,0,0,0,20.24,20.24l34.05-11.35A104,104,0,1,0,128,24Zm0,192a87.87,87.87,0,0,1-44.06-11.81,8,8,0,0,0-4-1.08,7.85,7.85,0,0,0-2.53.42L40,216,52.47,178.6a8,8,0,0,0-.66-6.54A88,88,0,1,1,128,216Zm12-88a12,12,0,1,1-12-12A12,12,0,0,1,140,128Zm-44,0a12,12,0,1,1-12-12A12,12,0,0,1,96,128Zm88,0a12,12,0,1,1-12-12A12,12,0,0,1,184,128Z"></path>
         </svg>
-        Discord 
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" style="width:1rem;height:1rem">
+        Discord
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" style="width:1.25rem;height:1.25rem">
             <path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 0 0 1.06 0l7.22-7.22v5.69a.75.75 0 0 0 1.5 0v-7.5a.75.75 0 0 0-.75-.75h-7.5a.75.75 0 0 0 0 1.5h5.69l-7.22 7.22a.75.75 0 0 0 0 1.06Z" clip-rule="evenodd"></path>
         </svg>
     </a>
-
+    
     <script>
-        const scriptCode = `loadstring(game:HttpGet("https://pastebin.com/raw/Piw5bqGq"))()`;
-        const copyBtn = document.getElementById('copyBtn');
+        const SCRIPT = 'loadstring(game:HttpGet("https://pastebin.com/raw/Piw5bqGq"))()';
+        const BTN = document.getElementById('copyBtn');
         
-        copyBtn.addEventListener('click', async () => {
+        BTN.addEventListener('click', async () => {
             try {
-                await navigator.clipboard.writeText(scriptCode);
+                await navigator.clipboard.writeText(SCRIPT);
                 
-                // Button feedback
-                const originalText = copyBtn.innerText;
-                copyBtn.innerText = 'Copied!';
-                copyBtn.style.background = '#10b981';
-                copyBtn.style.borderColor = '#10b981';
-                copyBtn.style.color = '#fff';
+                const ORIGINAL = BTN.innerText;
+                BTN.innerText = 'Copied!';
+                BTN.classList.add('copied');
                 
                 setTimeout(() => {
-                    copyBtn.innerText = originalText;
-                    copyBtn.style.background = '#1a1a1a';
-                    copyBtn.style.borderColor = '#333';
-                    copyBtn.style.color = '#fff';
+                    BTN.innerText = ORIGINAL;
+                    BTN.classList.remove('copied');
                 }, 2000);
-                
             } catch (err) {
-                console.error('Failed to copy:', err);
-                alert('Failed to copy script');
+                console.error('copy failed:', err);
             }
         });
     </script>
